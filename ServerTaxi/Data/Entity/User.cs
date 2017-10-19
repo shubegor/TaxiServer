@@ -5,17 +5,17 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ServerTaxi.Models
+namespace ServerTaxi.Data.Entity
 {
     [Table("Users")]
-    public class UserModel
+    public class User
     {
         [Key]
         [Required]
         [Display(Name = "User phone")]
         public string Phone { get; set; }
 
-        
+
         [Required]
         [StringLength(50, ErrorMessage = "The {0} must be at least {2} characters long.")]
         public string FIO { get; set; }
@@ -42,6 +42,6 @@ namespace ServerTaxi.Models
         public string Password { get; set; }
 
         [Required]
-        public int RileId { get; set; } 
+        public int RoleId { get; set; }
     }
 }

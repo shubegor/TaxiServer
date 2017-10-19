@@ -6,7 +6,7 @@ using System.Web;
 
 namespace ServerTaxi.Models
 {
-    public class UsersModelModel
+    public class UsersModel
     {
         [Key]
         
@@ -25,6 +25,6 @@ namespace ServerTaxi.Models
 
         public string Password { get; set; }
 
-        public int RileId { get; set; }
+        public int RoleId { get; set; }
     }
 }

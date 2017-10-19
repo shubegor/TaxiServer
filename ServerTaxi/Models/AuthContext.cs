@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
+using ServerTaxi.Data.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,8 +21,8 @@ namespace ServerTaxi.Models
             return new AuthContext();
         }
 
-        public DbSet<UserModel> UsersT { get; set; }
-        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<User> UsersT { get; set; }
+        public DbSet<Order> Orders { get; set; }
 
        
     }

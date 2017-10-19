@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Web;
-using ServerTaxi.Models;
+using ServerTaxi.Data.Entity;
 
 namespace ServerTaxi.Data
 {
@@ -14,8 +14,8 @@ namespace ServerTaxi.Data
 
         }
 
-        public DbSet<UserModel> Users { get; set; }
-        public DbSet<OrderModel> Orders { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<Order> Orders { get; set; }
        
     }
 }

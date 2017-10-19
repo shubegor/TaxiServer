@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using ServerTaxi.Data.Entity;
 using ServerTaxi.Models;
 using System;
 using System.Collections.Generic;
@@ -20,14 +21,18 @@ namespace ServerTaxi.Utilites
             userManager = new UserManager<IdentityUser>(new UserStore<IdentityUser>(authContext));
         }
 
-        public async Task<IdentityResult> RegisterUser(UserModel userModel)
+        public async Task<IdentityResult> RegisterUser(User userModel)
         {
             IdentityUser user = new IdentityUser
             {
                 UserName = userModel.Phone
             };
-            
             var result = await userManager.CreateAsync(user, userModel.Password);
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user.Id, "client");
+            }
+                
 
             return result;
         }

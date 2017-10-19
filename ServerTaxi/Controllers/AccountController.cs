@@ -14,6 +14,7 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using ServerTaxi.Models;
+using ServerTaxi.Data.Entity;
 using ServerTaxi.Providers;
 using ServerTaxi.Results;
 using ServerTaxi.Utilites;
@@ -325,7 +326,7 @@ namespace ServerTaxi.Controllers
         // POST api/Account/Register
         [AllowAnonymous]
         [Route("Register")]
-        public async Task<IHttpActionResult> Register(UserModel model)
+        public async Task<IHttpActionResult> Register(User model)
         {
             if (!ModelState.IsValid)
             {
@@ -335,7 +336,7 @@ namespace ServerTaxi.Controllers
             using (var repository = new AuthRepository())
             {
                 IdentityResult result = await repository.RegisterUser(model);
-                
+                          
                 if (!result.Succeeded)
                 {
                     return GetErrorResult(result);
