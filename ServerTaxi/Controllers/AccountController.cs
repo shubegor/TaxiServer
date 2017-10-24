@@ -335,6 +335,8 @@ namespace ServerTaxi.Controllers
 
             using (var repository = new AuthRepository())
             {
+                model.RoleId = 1;
+                model.RegistrationDate = DateTime.Now;
                 IdentityResult result = await repository.RegisterUser(model);
                           
                 if (!result.Succeeded)

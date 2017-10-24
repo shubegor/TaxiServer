@@ -28,10 +28,7 @@ namespace ServerTaxi.Utilites
                 UserName = userModel.Phone
             };
             var result = await userManager.CreateAsync(user, userModel.Password);
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user.Id, "client");
-            }
+           
                 
 
             return result;

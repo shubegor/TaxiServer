@@ -21,7 +21,7 @@ namespace ServerTaxi.Models
 
         public string AutoNumber { get; set; }
 
-        public DateTime RegistrationDate { get; set; } = DateTime.Now;
+        public DateTime RegistrationDate { get; set; }
 
         public string Password { get; set; }
 
