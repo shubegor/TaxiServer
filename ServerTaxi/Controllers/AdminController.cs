@@ -13,19 +13,20 @@ using System.Threading.Tasks;
 
 namespace ServerTaxi.Controllers
 {
-    [Authorize(Roles = "admin")]
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
         [Route("EditUser")]
         [HttpPost]
-        public IHttpActionResult EditUser(User User)
+        public IHttpActionResult EditUser(User UpUser)
         {
             try
             {
                 using (var db = new DB())
                 {
-                    db.Entry(User).State = EntityState.Modified;
+                    if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                        return BadRequest("Ошибка доступа");
+                    db.Entry(UpUser).State = EntityState.Modified;
                     db.SaveChanges();
                 }
                 return Ok();
@@ -43,6 +44,8 @@ namespace ServerTaxi.Controllers
             {
                 using (var db = new DB())
                 {
+                    if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                        return BadRequest("Ошибка доступа");
                     db.Users.Remove(db.Users.FirstOrDefault(l => l.Phone == phone));
                     db.SaveChanges();
                 }
@@ -55,14 +58,16 @@ namespace ServerTaxi.Controllers
 
         [Route("NewUser")]
         [HttpPost]
-        public async Task<IHttpActionResult> NewUser(User user)
+        public async Task<IHttpActionResult> NewUser(User Nuser)
         {
             try
             {
                 using (var db = new DB())
                 {
+                    if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                        return BadRequest("Ошибка доступа");
                     AccountController a = new AccountController();
-                    await a.Register(user);
+                    await a.Register(Nuser);
                 }
             }
             catch
@@ -82,7 +87,9 @@ namespace ServerTaxi.Controllers
 
                 using (var db = new DB())
                 {
-                    list = db.Users
+                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                    return list;
+                list = db.Users
                         .Select(l => new UsersModel()
                         {
                             Phone = l.Phone,
@@ -106,6 +113,8 @@ namespace ServerTaxi.Controllers
             List<OrderModel> s = null;
             using (var db = new DB())
             {
+                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                    return s;
                 s = db.Orders
                     .Include(l => l.Client)
                     .Include(l => l.Driver)

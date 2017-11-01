@@ -15,7 +15,6 @@ using System.Xml.Linq;
 
 namespace ServerTaxi.Controllers
 {
-    //[Authorize(Roles = "client")] //пока что не работает
     [RoutePrefix("api/client")]
     public class ClientController : ApiController
     {
@@ -25,25 +24,30 @@ namespace ServerTaxi.Controllers
 
         public IHttpActionResult All()
         {
-            List<OrderModel> s = null; //todo поменять модель для клиента
+            
+            List<OrderClientModel> s = null;
             using (var db = new DB())
             {
-                    s = db.Orders
+
+                     if(db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 1);
+                     s = db.Orders
                     .Include(l => l.Client)
                     .Include(l => l.Driver)
                     .Where(l => l.Phone_client == User.Identity.Name)
-                    .Select(l => new OrderModel
+                    .Select(l => new OrderClientModel
                     {
                         Id = l.Id,
                         OrderDate = l.OrderDate,
                         Address1 = l.Address1,
                         Address2 = l.Address2,
-                        Phone_client = l.Client.Phone,
                         Phone_driver = l.Driver.Phone,
+                        Car = l.Driver.Auto + " " + l.Driver.AutoNumber, 
                         Price = l.Price,
                         Status = l.Status
-                    }).ToList();
-
+                    })
+                    .OrderBy(x=> x.OrderDate)
+                    .ToList();
+                
                 
                 return Ok(s);
             }
@@ -53,7 +57,7 @@ namespace ServerTaxi.Controllers
         [HttpGet]
         public IHttpActionResult New(string a1, string a2)
         {
-            Order order = null;
+            Order order = new Order();
             try
             {
                 using (var db = new DB())
@@ -115,8 +119,6 @@ namespace ServerTaxi.Controllers
                 return int.Parse(xm.Root.Element("row").Element("element").Element("distance").Element("value").Value);
             }
             catch { return 0; }
-
-
         }
 
     }

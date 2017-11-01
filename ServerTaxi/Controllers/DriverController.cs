@@ -4,8 +4,6 @@ using ServerTaxi.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using System.Data.Entity;
 
@@ -22,10 +20,11 @@ namespace ServerTaxi.Controllers
         {
             using (var db = new DB())
             {
+                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
+                    return BadRequest("Ошибка доступа");
                 var query = (from a in db.Orders
                              where a.Id == id
                              select a).SingleOrDefault();
-
                 if (query.Driver == null &&
                     query.Status == Status.Active)
                 {
@@ -45,6 +44,8 @@ namespace ServerTaxi.Controllers
         {
             using (var db = new DB())
             {
+                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
+                    return BadRequest("Ошибка доступа");
                 var query = (from a in db.Orders
                              where a.Id == id
                              select a).SingleOrDefault();
@@ -65,9 +66,11 @@ namespace ServerTaxi.Controllers
 
         public IHttpActionResult All()
         {
-            List<OrderModel> s = null; //todo поменять модель для таксиста
+            List<OrderModel> s = null; 
             using (var db = new DB())
             {
+                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
+                    return BadRequest("Ошибка доступа");
                 s = db.Orders
                 .Include(l => l.Client)
                 .Include(l => l.Driver)
