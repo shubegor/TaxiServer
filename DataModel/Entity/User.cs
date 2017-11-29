@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace ServerTaxi.Data.Entity
+namespace DataModel.Entity
 {
     [Table("Users")]
     public class User

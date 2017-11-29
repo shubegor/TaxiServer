@@ -211,10 +211,6 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ClientController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Data\DB.cs" />
-    <Compile Include="Data\Entity\Order.cs" />
-    <Compile Include="Data\Entity\Status.cs" />
-    <Compile Include="Data\Entity\User.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -222,9 +218,6 @@
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\AuthContext.cs" />
-    <Compile Include="Models\OrderClientModel.cs" />
-    <Compile Include="Models\OrderModel.cs" />
-    <Compile Include="Models\UsersModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Providers\CustomOAuthProvider.cs" />
@@ -300,6 +293,16 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataModel\DataModel.csproj">
+      <Project>{b630afa2-0d62-4934-a73a-8a4073f7c542}</Project>
+      <Name>DataModel</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DBAccess\DBAccess.csproj">
+      <Project>{df265327-156b-4330-9c94-538d33cf2d6f}</Project>
+      <Name>DBAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
+using System.Data;
 using System.Linq;
 using System.Web;
-using ServerTaxi.Data.Entity;
+using DataModel.Entity;
+using System.Data.Entity;
+using System.Configuration;
 
-namespace ServerTaxi.Data
+namespace DataModel.Data
 {
     public class DB : DbContext
     {
-        public DB() : base("AuthContext")
+       
+        public DB() : base("name = AuthContext")
         {
 
         }

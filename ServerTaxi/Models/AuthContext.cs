@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNet.Identity.EntityFramework;
-using ServerTaxi.Data.Entity;
+using DataModel.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;

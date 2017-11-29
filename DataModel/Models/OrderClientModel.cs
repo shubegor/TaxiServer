@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace ServerTaxi.Models
+namespace DataModel.Models
 {
     public class OrderClientModel
     {

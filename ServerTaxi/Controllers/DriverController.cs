@@ -1,6 +1,6 @@
-﻿using ServerTaxi.Data;
-using ServerTaxi.Data.Entity;
-using ServerTaxi.Models;
+﻿using DataModel.Data;
+using DataModel.Entity;
+using DataModel.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,23 +18,17 @@ namespace ServerTaxi.Controllers
         [HttpGet]
         public IHttpActionResult TakeOrder(Guid id)
         {
-            using (var db = new DB())
+            try
             {
-                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
-                    return BadRequest("Ошибка доступа");
-                var query = (from a in db.Orders
-                             where a.Id == id
-                             select a).SingleOrDefault();
-                if (query.Driver == null &&
-                    query.Status == Status.Active)
-                {
-                    query.Status = Status.InProgress;
-                    query.Driver = db.Users.FirstOrDefault(l => l.Phone == User.Identity.Name);
-                    db.SaveChanges();
-                    return Ok();
-                }
+                var a = DBAccess.DriverReqests.TakeOrder(id, User.Identity.Name);
+                if (a == true) return Ok();
+                else
+                    return BadRequest("Нет доступа");
             }
-            return BadRequest("Ошибка");
+            catch
+            {
+                return BadRequest("Ошибка");
+            }
         }
 
 
@@ -42,23 +36,15 @@ namespace ServerTaxi.Controllers
         [HttpGet]
         public IHttpActionResult ConfirmOrder(Guid id)
         {
-            using (var db = new DB())
+            try
             {
-                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
-                    return BadRequest("Ошибка доступа");
-                var query = (from a in db.Orders
-                             where a.Id == id
-                             select a).SingleOrDefault();
-
-                if (query.Driver.Phone == User.Identity.Name  &&
-                    query.Status == Status.InProgress)
-                {
-                    query.Status = Status.Done;
-                    db.SaveChanges();
-                    return Ok();
-                }
+                var a = DBAccess.DriverReqests.ConfirmOrder(id, User.Identity.Name);
+                if (a == true) return Ok();
+                else
+                    return BadRequest("Нет доступа");
             }
-            return BadRequest("Ошибка");
+            catch { return BadRequest("Ошибка"); }
+            
         }
 
         [Route("MyOrders")]
@@ -66,31 +52,34 @@ namespace ServerTaxi.Controllers
 
         public IHttpActionResult All()
         {
-            List<OrderModel> s = null; 
-            using (var db = new DB())
+
+            List<OrderModel> s = null;
+            try
             {
-                if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 2)
-                    return BadRequest("Ошибка доступа");
-                s = db.Orders
-                .Include(l => l.Client)
-                .Include(l => l.Driver)
-                .Where(l => l.Phone_driver == User.Identity.Name)
-                .Select(l => new OrderModel
-                {
-                    Id = l.Id,
-                    OrderDate = l.OrderDate,
-                    Address1 = l.Address1,
-                    Address2 = l.Address2,
-                    Phone_client = l.Client.Phone,
-                    Phone_driver = l.Driver.Phone,
-                    Price = l.Price,
-                    Status = l.Status
-                }).ToList();
-
-
-                return Ok(s);
+                s = DBAccess.DriverReqests.All(User.Identity.Name);
+                if (s != null) return Ok(s);
+                else return BadRequest("Нет доступа");
             }
+            catch { return BadRequest("Ошибка"); }
+            
         }
+
+        [Route("Orders")]
+        [HttpGet]
+        public IHttpActionResult Orders()
+        {
+
+            List<OrderModel> s = null;
+            try
+            {
+                s = DBAccess.DriverReqests.Orders(User.Identity.Name);
+                if (s != null) return Ok(s);
+                else return BadRequest("Нет доступа");
+            }
+            catch { return BadRequest("Ошибка"); }
+
+        }
+
 
     }
 }

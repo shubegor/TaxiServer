@@ -14,11 +14,11 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using ServerTaxi.Models;
-using ServerTaxi.Data.Entity;
+using DataModel.Entity;
 using ServerTaxi.Providers;
 using ServerTaxi.Results;
 using ServerTaxi.Utilites;
-using ServerTaxi.Data;
+using DataModel.Data;
 
 namespace ServerTaxi.Controllers
 {

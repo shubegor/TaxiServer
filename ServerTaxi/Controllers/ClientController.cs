@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using System.Data.Entity;
-using ServerTaxi.Models;
 using System.Threading.Tasks;
-using ServerTaxi.Data;
-using ServerTaxi.Data.Entity;
+using DataModel.Data;
+using DataModel.Entity;
+using DataModel.Models;
 using System.IO;
 using System.Xml.Linq;
 
@@ -24,54 +24,25 @@ namespace ServerTaxi.Controllers
 
         public IHttpActionResult All()
         {
-            
             List<OrderClientModel> s = null;
-            using (var db = new DB())
+            try
             {
-
-                     if(db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 1);
-                     s = db.Orders
-                    .Include(l => l.Client)
-                    .Include(l => l.Driver)
-                    .Where(l => l.Phone_client == User.Identity.Name)
-                    .Select(l => new OrderClientModel
-                    {
-                        Id = l.Id,
-                        OrderDate = l.OrderDate,
-                        Address1 = l.Address1,
-                        Address2 = l.Address2,
-                        Phone_driver = l.Driver.Phone,
-                        Car = l.Driver.Auto + " " + l.Driver.AutoNumber, 
-                        Price = l.Price,
-                        Status = l.Status
-                    })
-                    .OrderBy(x=> x.OrderDate)
-                    .ToList();
-                
-                
-                return Ok(s);
+                s = DBAccess.ClientRequests.All(User.Identity.Name);
+                if (s != null) return Ok(s);
+                else return BadRequest();
             }
+            catch { return BadRequest(); }
+            
+            
         }
 
         [Route("NewOrder")]
         [HttpGet]
         public IHttpActionResult New(string a1, string a2)
         {
-            Order order = new Order();
             try
             {
-                using (var db = new DB())
-                {
-                    order.Id = Guid.NewGuid();
-                    order.Address1 = a1;
-                    order.Address2 = a2;
-                    order.Phone_client = User.Identity.Name;
-                    order.Price = GetDistance(a1, a2) / 33;
-                    order.OrderDate = DateTime.Now;
-                    order.Status = Status.Active;
-                    db.Orders.Add(order);
-                    db.SaveChanges();
-                }
+                DBAccess.ClientRequests.New(a1, a2, GetDistance(a1, a2), User.Identity.Name);
             }
             catch { return BadRequest("Ошибка добавления заказа"); }
             return Ok();
@@ -83,22 +54,12 @@ namespace ServerTaxi.Controllers
         public IHttpActionResult CancelOrder(Guid id)
         {
 
-            using (var db = new DB())
+            try
             {
-                var query = (from a in db.Orders
-                            where a.Id == id
-                            select a).SingleOrDefault();
-                
-                    if (query.Driver == null && 
-                        query.Status == Status.Active)
-                    {
-                        query.Status = Status.Canceled;
-                        db.SaveChanges();
-                        return Ok();
-                    }
-                               
+                DBAccess.ClientRequests.CancelOrder(id);
             }
-            return BadRequest("Отменить заказ невозможно");
+            catch { return BadRequest("Ошибка добавления заказа"); }
+            return Ok();
         }
 
 
