@@ -10,12 +10,13 @@ using System.Data.Entity;
 
 namespace ServerTaxi.Controllers
 {
+    [Authorize]
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
         [Route("EditUser")]
         [HttpPost]
-        public IHttpActionResult EditUser(User UpUser)
+        public IHttpActionResult EditUser(UsersModel UpUser)
         {
             try
             {
@@ -24,7 +25,7 @@ namespace ServerTaxi.Controllers
                 else return Ok();
             }
             catch { return BadRequest("Изменения не применены"); }
-            
+
         }
 
 
@@ -34,12 +35,14 @@ namespace ServerTaxi.Controllers
         {
             try
             {
+                AccountController account = new AccountController();         
                 var a = DBAccess.AdminRequests.DeleteUser(phone, User.Identity.Name);
                 if (a != true) return BadRequest("Нет доступа");
                 else return Ok();
             }
-            catch { return BadRequest("Изменения не применены"); }
-        }
+                catch { return BadRequest("Изменения не применены");
+    }
+}
 
 
         [Route("NewUser")]
@@ -78,6 +81,7 @@ namespace ServerTaxi.Controllers
         }
 
         [Route("Orders")]
+        [HttpGet]
         public List<OrderModel> Orders()
         {
             List<OrderModel> s = null;

@@ -196,7 +196,7 @@ namespace ServerTaxi.Controllers
 
         // POST api/Account/RemoveLogin
         [Route("RemoveLogin")]
-        public async Task<IHttpActionResult> RemoveLogin(RemoveLoginBindingModel model)
+        public async Task<IHttpActionResult> RemoveLogin(string phone)
         {
             if (!ModelState.IsValid)
             {
@@ -204,17 +204,9 @@ namespace ServerTaxi.Controllers
             }
 
             IdentityResult result;
-
-            if (model.LoginProvider == LocalLoginProvider)
-            {
-                result = await UserManager.RemovePasswordAsync(User.Identity.GetUserId());
-            }
-            else
-            {
-                result = await UserManager.RemoveLoginAsync(User.Identity.GetUserId(),
-                    new UserLoginInfo(model.LoginProvider, model.ProviderKey));
-            }
-
+            
+            result = await UserManager.RemovePasswordAsync(phone);
+            
             if (!result.Succeeded)
             {
                 return GetErrorResult(result);

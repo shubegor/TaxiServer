@@ -10,14 +10,43 @@ namespace DBAccess
 {
     public class AdminRequests
     {
-        public static bool EditUser(User UpUser, string phone)
+        public static bool EditUser(UsersModel UpUser, string phone)
         {
+           
             using (var db = new DB())
             {
                 if (db.Users.FirstOrDefault(x => x.Phone == phone).RoleId != 0)
                     return false;
-                db.Entry(UpUser).State = EntityState.Modified;
-                db.SaveChanges();
+
+                db.Users.FirstOrDefault(x => x.Phone == UpUser.Phone).Auto = UpUser.Auto;
+                db.Users.FirstOrDefault(x => x.Phone == UpUser.Phone).AutoNumber = UpUser.AutoNumber;
+                db.Users.FirstOrDefault(x => x.Phone == UpUser.Phone).Email = UpUser.Email;
+                db.Users.FirstOrDefault(x => x.Phone == UpUser.Phone).FIO = UpUser.FIO;
+                db.Users.FirstOrDefault(x => x.Phone == UpUser.Phone).RoleId = UpUser.RoleId;
+
+                try
+                {
+                    db.SaveChanges();
+                }
+                catch (System.Data.Entity.Validation.DbEntityValidationException dbEx)
+                {
+                    Exception raise = dbEx;
+                    foreach (var validationErrors in dbEx.EntityValidationErrors)
+                    {
+                        foreach (var validationError in validationErrors.ValidationErrors)
+                        {
+                            string message = string.Format("{0}:{1}",
+                                validationErrors.Entry.Entity.ToString(),
+                                validationError.ErrorMessage);
+                            // raise a new exception nesting
+                            // the current instance as InnerException
+                            raise = new InvalidOperationException(message, raise);
+                        }
+                    }
+                    throw raise;
+                }
+
+                
                 return true;
             }
         }
@@ -28,6 +57,7 @@ namespace DBAccess
             {
                 if (db.Users.FirstOrDefault(x => x.Phone == phone).RoleId != 0)
                     return false;
+                
                 db.Users.Remove(db.Users.FirstOrDefault(l => l.Phone == Uphone));
                 db.SaveChanges();
             }
