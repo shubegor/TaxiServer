@@ -76,7 +76,8 @@ namespace Admin_Client
 
                 using (var httpWebResponse = (HttpWebResponse)request.GetResponse())
                 {
-                    Stream stream = httpWebResponse.GetResponseStream();   
+                    Stream stream = httpWebResponse.GetResponseStream();
+                    
                     DataContractJsonSerializer JsonSerializer = new DataContractJsonSerializer(typeof(List<OrderModel>));
                     ord = (List<OrderModel>)JsonSerializer.ReadObject(stream);
                 }
@@ -99,6 +100,9 @@ namespace Admin_Client
                 using (var httpWebResponse = (HttpWebResponse)request.GetResponse())
                 {
                     Stream stream = httpWebResponse.GetResponseStream();
+
+
+                
                     DataContractJsonSerializer JsonSerializer = new DataContractJsonSerializer(typeof(List<UserModel>));
                     users = (List<UserModel>)JsonSerializer.ReadObject(stream);
                 }

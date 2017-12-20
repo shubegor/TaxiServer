@@ -5,11 +5,32 @@ using DataModel.Models;
 using DataModel.Entity;
 using DataModel.Data;
 using System.Data.Entity;
-
+using DataModel;
 namespace DBAccess
 {
-    public class AdminRequests
+    public class AdminRequests : IAdminRequests
     {
+        
+        public bool EditUserStat(UsersModel UpUser, string phone)
+        {
+            return EditUser(UpUser, phone);
+        }
+
+        public bool DeleteUserStat(string Uphone, string phone)
+        {
+            return DeleteUser(Uphone, phone);
+        }
+
+        public List<UsersModel> AllUserStat(string phone)
+        {
+            return AllUser(phone);
+        }
+
+        public List<OrderModel> OrdersStat(string phone)
+        {
+            return Orders(phone);
+        }
+
         public static bool EditUser(UsersModel UpUser, string phone)
         {
            

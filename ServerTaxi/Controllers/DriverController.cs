@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
 using System.Data.Entity;
-
+using DataModel;
 
 namespace ServerTaxi.Controllers
 {
@@ -14,13 +14,19 @@ namespace ServerTaxi.Controllers
     [RoutePrefix("api/Driver")]
     public class DriverController : ApiController
     {
+        private IDriverRequests repo;
+        public DriverController(IDriverRequests repo)
+        {
+            this.repo = repo;
+        }
+
         [Route("TakeOrder")]
         [HttpGet]
         public IHttpActionResult TakeOrder(Guid id)
         {
             try
             {
-                var a = DBAccess.DriverReqests.TakeOrder(id, User.Identity.Name);
+                var a = repo.TakeOrderStat(id, User.Identity.Name);
                 if (a == true) return Ok();
                 else
                     return BadRequest("Нет доступа");
@@ -38,7 +44,7 @@ namespace ServerTaxi.Controllers
         {
             try
             {
-                var a = DBAccess.DriverReqests.ConfirmOrder(id, User.Identity.Name);
+                var a = repo.ConfirmOrderStat(id, User.Identity.Name);
                 if (a == true) return Ok();
                 else
                     return BadRequest("Нет доступа");
@@ -56,7 +62,7 @@ namespace ServerTaxi.Controllers
             List<OrderModel> s = null;
             try
             {
-                s = DBAccess.DriverReqests.All(User.Identity.Name);
+                s = repo.AllStat(User.Identity.Name);
                 if (s != null) return Ok(s);
                 else return BadRequest("Нет доступа");
             }
@@ -72,7 +78,7 @@ namespace ServerTaxi.Controllers
             List<OrderModel> s = null;
             try
             {
-                s = DBAccess.DriverReqests.Orders(User.Identity.Name);
+                s = repo.OrdersStat(User.Identity.Name);
                 if (s != null) return Ok(s);
                 else return BadRequest("Нет доступа");
             }

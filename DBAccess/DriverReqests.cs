@@ -5,9 +5,10 @@ using DataModel.Models;
 using DataModel.Entity;
 using DataModel.Data;
 using System.Data.Entity;
+using DataModel;
 namespace DBAccess
 {
-    public class DriverReqests
+    public class DriverReqests : IDriverRequests
     {
         public static List<OrderModel> All(string phone)
         {
@@ -103,6 +104,26 @@ namespace DBAccess
                     .ToList();
             }
             return s;
+        }
+
+        public List<OrderModel> AllStat(string phone)
+        {
+            return All(phone);
+        }
+
+        public bool TakeOrderStat(Guid id, string phone)
+        {
+            return TakeOrder(id, phone);
+        }
+
+        public bool ConfirmOrderStat(Guid id, string phone)
+        {
+            return ConfirmOrder(id, phone);
+        }
+
+        public List<OrderModel> OrdersStat(string phone)
+        {
+            return Orders(phone);
         }
     }
 }

@@ -49,6 +49,9 @@
     <Compile Include="Entity\Order.cs" />
     <Compile Include="Entity\Status.cs" />
     <Compile Include="Entity\User.cs" />
+    <Compile Include="IAdminRequests.cs" />
+    <Compile Include="IClientRequests.cs" />
+    <Compile Include="IDriverRequests.cs" />
     <Compile Include="Models\OrderClientModel.cs" />
     <Compile Include="Models\OrderModel.cs" />
     <Compile Include="Models\UsersModel.cs" />

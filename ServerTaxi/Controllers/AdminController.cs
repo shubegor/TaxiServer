@@ -7,6 +7,7 @@ using DataModel.Entity;
 using DataModel.Models;
 using System.Threading.Tasks;
 using System.Data.Entity;
+using DataModel;
 
 namespace ServerTaxi.Controllers
 {
@@ -14,13 +15,19 @@ namespace ServerTaxi.Controllers
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
+        private IAdminRequests repo;
+        public AdminController(IAdminRequests repo)
+        {
+            this.repo = repo;
+        }
+
         [Route("EditUser")]
         [HttpPost]
         public IHttpActionResult EditUser(UsersModel UpUser)
         {
             try
             {
-                var a = DBAccess.AdminRequests.EditUser(UpUser, User.Identity.Name);
+                var a = repo.EditUserStat(UpUser, User.Identity.Name);
                 if (a != true) return BadRequest("Нет доступа");
                 else return Ok();
             }
@@ -36,7 +43,7 @@ namespace ServerTaxi.Controllers
             try
             {
                 AccountController account = new AccountController();         
-                var a = DBAccess.AdminRequests.DeleteUser(phone, User.Identity.Name);
+                var a = repo.DeleteUserStat(phone, User.Identity.Name);
                 if (a != true) return BadRequest("Нет доступа");
                 else return Ok();
             }
@@ -74,7 +81,8 @@ namespace ServerTaxi.Controllers
                 List<UsersModel> list = null;
             try
             {
-                list = DBAccess.AdminRequests.AllUser(User.Identity.Name);
+                list = repo.AllUserStat(User.Identity.Name);
+                
             }
             catch { }
                 return list;
@@ -87,7 +95,7 @@ namespace ServerTaxi.Controllers
             List<OrderModel> s = null;
             try
             {
-                s = DBAccess.AdminRequests.Orders(User.Identity.Name);
+                s = repo.OrdersStat(User.Identity.Name);
             } catch { }
             return s;
         }

@@ -4,12 +4,27 @@ using System.Linq;
 using DataModel.Models;
 using DataModel.Entity;
 using DataModel.Data;
-
+using DataModel;
 using System.Data.Entity;
 namespace DBAccess
 {
-    public class ClientRequests
+    public class ClientRequests : IClientRequests
     {
+        public List<OrderClientModel> AllStat(string phone)
+        {
+            return All(phone);
+        }
+
+        public void CancelOrderStat(Guid id)
+        {
+            CancelOrder(id);
+        }
+
+        public void NewStat(string a1, string a2, int distance, string phone)
+        {
+            New(a1, a2, distance, phone);
+        }
+
 
         public static List<OrderClientModel> All(string phone)
         {
@@ -74,7 +89,6 @@ namespace DBAccess
 
             }
         }
-        
-
     }
+
 }

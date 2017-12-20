@@ -12,13 +12,19 @@ using DataModel.Entity;
 using DataModel.Models;
 using System.IO;
 using System.Xml.Linq;
+using DataModel;
 
 namespace ServerTaxi.Controllers
 {
     [RoutePrefix("api/client")]
     public class ClientController : ApiController
     {
-        
+        private IClientRequests repo;
+        public ClientController(IClientRequests repo)
+        {
+            this.repo = repo;
+        }
+
         [Route("MyOrders")]
         [HttpGet]
 
@@ -27,7 +33,7 @@ namespace ServerTaxi.Controllers
             List<OrderClientModel> s = null;
             try
             {
-                s = DBAccess.ClientRequests.All(User.Identity.Name);
+                s = repo.AllStat(User.Identity.Name);
                 if (s != null) return Ok(s);
                 else return BadRequest();
             }
@@ -42,7 +48,7 @@ namespace ServerTaxi.Controllers
         {
             try
             {
-                DBAccess.ClientRequests.New(a1, a2, GetDistance(a1, a2), User.Identity.Name);
+               repo.NewStat(a1, a2, GetDistance(a1, a2), User.Identity.Name);
             }
             catch { return BadRequest("Ошибка добавления заказа"); }
             return Ok();
@@ -56,7 +62,7 @@ namespace ServerTaxi.Controllers
 
             try
             {
-                DBAccess.ClientRequests.CancelOrder(id);
+                repo.CancelOrderStat(id);
             }
             catch { return BadRequest("Ошибка добавления заказа"); }
             return Ok();
