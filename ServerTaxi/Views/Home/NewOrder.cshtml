@@ -1,0 +1,59 @@
+﻿@{
+    Layout = "~/Views/Shared/_User_Layout.cshtml";
+}
+
+<div class="row justify-content-center mt-3">
+    <div class="col col-md-4">
+        <div class="card border-info">
+            <div class="card-body">
+                <div id="AddOrder">
+                    <div class="form-group" align="center">
+                        <h2>Заказ такси</h2>
+                        <p>
+                            <label for="address">Из</label>
+                            <input type="text" id="address1" placeholder="Адрес отправления"/>
+                        </p>
+                        <p>
+                            <label for="address2">Куда</label>
+                            <input type="text" id="address2" placeholder="Адрес прибытия"/>
+                        </p>
+                        <input type="submit" id="submitOrder" value="Заказать" class="btn btn-success" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                @section scripts
+{
+                    <script type="text/javascript">
+                        $(function AddOrder() {
+                            $('#submitOrder').click(function (e) {
+                                e.preventDefault();
+                                var order = {
+                                    Address1: $('#address1').val(),
+                                    Address2: $('#address2').val()
+                                };
+
+                                $.ajax({
+                                    url: 'http://localhost:11821/api/client/NewOrder?a1=' + order.Address1 + '&a2=' + order.Address2,
+                                    type: 'GET',
+                                    data: JSON.stringify(order),
+                                    contentType: "application/json;charset=utf-8",
+                                    success: function (data) {
+                                        alert("Заказ успешно добавлен");
+                                        window.location.href = "http://localhost:11821/Home/Orders";
+                                    },
+                                    error: function (x, y, z) {
+                                        alert(x + '\n' + y + '\n' + z);
+                                    },
+                                    beforeSend: function (xhr) {
+                                        var token = window.localStorage.getItem('tokenKey');
+                                        xhr.setRequestHeader("Authorization", "Bearer " + token);
+                                    }
+                                });
+                            });
+                        })
+                    </script>
+                }

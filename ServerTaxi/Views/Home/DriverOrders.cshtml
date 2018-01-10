@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Views/Shared/_Driver_Layout.cshtml";
+}
+
+<div id="tableBlock" class="mt-2"></div>
+@section scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            GetAllOrders();
+
+        });
+        // Получение всех книг по ajax-запросу
+        function GetAllOrders() {
+
+            $.ajax({
+                url: 'http://localhost:11821/api/driver/MyOrders',
+                type: 'GET',
+                dataType: 'json',
+                success: function (data) {
+                    WriteResponse(data);
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+
+        // вывод полученных данных на экран
+        function WriteResponse(orders) {
+            var strResult = "<table class='table table-striped table-bordered'><thead class='thead-dark' align='center'><th>Время</th><th>Выехал из</th><th>Приехал в</th><th>Цена</th><th>Статус</th></thead>";
+            $.each(orders, function (index, order) {
+                var date = order.OrderDate.slice(0, 10) + " " + order.OrderDate.slice(11, 19);
+                var status;
+                if (order.Status == "Выполняется") {
+                    status = "<a id='delItem' data-item='" + order.Id + "' class='btn btn-success' onclick='ConfirmItem(this);' >Подтвердить</a>" ;
+                }
+                else {
+                    status = order.Status;
+                }
+                strResult += "<tr align='center'><td>" + date + "</td><td> " + order.Address1 + "</td><td>" +
+                    order.Address2 + "</td><td>" + order.Price + "</td><td>" + status + "</td></tr>";
+            });
+            strResult += "</table>";
+            $("#tableBlock").html(strResult);
+
+        }
+        function ConfirmItem(el) {
+            // получаем id удаляемого объекта
+            var id = $(el).attr('data-item');
+            ConfirmOrder(id);
+        }
+        function ConfirmOrder(id) {
+            $.ajax({
+                url: 'http://localhost:11821/api/Driver/ConfirmOrder?id=' + id,
+                type: 'GET',
+                contentType: "application/json;charset=utf-8",
+                success: function (data) {
+                    GetAllOrders();
+                    //window.location.href = "http://localhost:11821/Home/ActiveOrders";
+                },
+                error: function (x, y, z) {
+                    alert(x + '\n' + y + '\n' + z);
+                },
+                beforeSend: function (xhr) {
+                    var token = window.localStorage.getItem('tokenKey');
+                    xhr.setRequestHeader("Authorization", "Bearer " + token);
+                }
+            });
+        }
+    </script>
+}
+
+

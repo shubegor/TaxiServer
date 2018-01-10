@@ -1,0 +1,55 @@
+﻿<div class="row justify-content-center mt-3">
+    <div class="col col-md-4">
+        <div class="card border-danger">
+            <div class="card-body">
+                <div class="loginForm">
+                    <div class="form-group" align="center">
+                        <h3>Вход на сайт</h3>
+                        <p>
+                            <label for="phoneLogin">Телефон</label>
+                            <input type="tel" id="phoneLogin" placeholder="79000000000" />
+                        </p>
+                        <p>
+                            <label for="passwordLogin">Пароль</label>
+                            <input type="password" id="passwordLogin" placeholder="Введите пароль" />
+                        </p>
+                        <input type="submit" id="submitLogin" value="Логин" class="btn btn-danger" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+                @section scripts{
+                    <script type="text/javascript">
+                        $(function () {
+                            var tokenKey = "tokenInfo";
+                            $('#submitLogin').click(function (e) {
+                                e.preventDefault();
+                                var loginData = {
+                                    grant_type: 'password',
+                                    username: $('#phoneLogin').val(),
+                                    password: $('#passwordLogin').val()
+                                };
+
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/Token',
+                                    data: loginData
+                                }).done(function (data) {
+                                    $('.userName').text(data.username);
+                                    $('.loginForm').css('display', 'none');
+                                    window.location.href = "http://localhost:11821/Home/ActiveOrders";
+                                    // сохраняем в хранилище sessionStorage токен доступа
+                                    window.localStorage.setItem('tokenKey', data.access_token);
+                                    console.log(data.access_token);
+                                }).fail(function (data) {
+                                    alert('При логине возникла ошибка');
+                                });
+                            });
+
+                        })
+                    </script>
+                }
+

@@ -1,0 +1,113 @@
+﻿<div class="row justify-content-center mt-3">
+    <div class="col col-md-4">
+        <div class="card border-warning">
+            <div class="card-body">
+                <div class="registerForm">
+                    <div class="form-group" align="center">
+                        <h2>Регистрация</h2>
+                        <p>
+                            <label for="phone">Телефон</label>
+                            <input type="tel" id="phone" placeholder="Введите телефон" />
+                        </p>
+                        <p>
+                            <label for="fio">ФИО</label>
+                            <input type="text" id="fio" placeholder="Введите ФИО" />
+                        </p>
+                        <p>
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Введите email" />
+                        </p>
+                        <p>
+                            <label for="password">Пароль</label>
+                            <input type="password" id="password" placeholder="Введите пароль" />
+                        </p>
+
+                        <input type="submit" id="submit" value="Регистрация" class="btn btn-warning" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br/>
+        <div class="userInfo" style="display:none;">
+            <p>Вы вошли как: <span class="userName"></span></p>
+        </div>
+        <div class="card border-success">
+            <div class="card-body">
+                <div class="form-group" align="center">
+                    <div class="loginForm">
+                        <h3>Вход на сайт</h3>
+                        <p>
+                            <label for="phoneLogin">Телефон</label>
+                            <input type="tel" id="phoneLogin" placeholder="79000000000"/> 
+                        </p>
+                        <p>
+                            <label for="passwordLogin">Пароль</label>
+                            <input type="password" id="passwordLogin" placeholder="Введите пароль"/>
+                        </p>
+                        <input type="submit" id="submitLogin" value="Логин" class="btn btn-success"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @section scripts{
+            <script type="text/javascript">
+                $(function () {
+                    $('#submit').click(function (e) {
+                        e.preventDefault();
+                        var user = {
+                            Phone: $('#phone').val(),
+                            FIO: $('#fio').val(),
+                            Email: $('#email').val(),
+                            Auto: "null",
+                            AutoNumber: "null",
+                            RegistrationDate: "2017-10-16",
+                            Password: $('#password').val(),
+                            RoleId: 1
+                        };
+
+                        $.ajax({
+                            url: 'http://localhost:11821/api/Account/Register',
+                            type: 'POST',
+                            data: JSON.stringify(user),
+                            contentType: "application/json; charset=utf-8",
+
+                            done: function (data) {
+                                alert("Регистрация пройдена");
+                            },
+                            fail: function (x, y, z) {
+                                alert(x + '\n' + y + '\n' + z + "Ошибка рег");
+                            }
+                        });
+                    });
+
+                    var tokenKey = "tokenInfo";
+                    $('#submitLogin').click(function (e) {
+                        e.preventDefault();
+                        var loginData = {
+                            grant_type: 'password',
+                            username: $('#phoneLogin').val(),
+                            password: $('#passwordLogin').val()
+                        };
+
+                        $.ajax({
+                            type: 'POST',
+                            url: '/Token',
+                            data: loginData
+                        }).done(function (data) {
+                            $('.userName').text(data.username);
+                            $('.userInfo').css('display', 'block');
+                            $('.registerForm').css('display', 'none');
+                            $('.loginForm').css('display', 'none');
+                            window.location.href = "http://localhost:11821/Home/Orders";
+                            // сохраняем в хранилище sessionStorage токен доступа
+                            window.localStorage.setItem('tokenKey', data.access_token);
+                            console.log(data.access_token);
+                        }).fail(function (data) {
+                            alert('При логине возникла ошибка');
+                        });
+                    });
+
+                })
+            </script>
+        }
