@@ -56,7 +56,7 @@ namespace ServerTaxi.Controllers
 
 
         [Route("CancelOrder")]
-        [HttpGet]
+        [HttpDelete]
         public IHttpActionResult CancelOrder(Guid id)
         {
 

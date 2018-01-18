@@ -329,6 +329,9 @@ namespace ServerTaxi.Controllers
             {
                 model.RoleId = 1;
                 model.RegistrationDate = DateTime.Now;
+                if (model.Auto == "") model.Auto = "-";
+                if (model.AutoNumber == "") model.AutoNumber = "-";
+                if (model.Email == "") model.Email = "-";
                 IdentityResult result = await repository.RegisterUser(model);
                           
                 if (!result.Succeeded)

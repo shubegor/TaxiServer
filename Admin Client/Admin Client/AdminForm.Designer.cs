@@ -33,10 +33,12 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.GRID = new System.Windows.Forms.DataGridView();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.AddButton = new System.Windows.Forms.Button();
             this.DeleteUserButton = new System.Windows.Forms.Button();
             this.EditUserButton = new System.Windows.Forms.Button();
             this.UserGrid = new System.Windows.Forms.DataGridView();
-            this.AddButton = new System.Windows.Forms.Button();
+            this.orderModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.userModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phoneclientDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.phonedriverDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -45,8 +47,6 @@
             this.orderDateDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.priceDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.statusDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.orderModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.userModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.phoneDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.fIODataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.emailDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -118,6 +118,16 @@
             this.tabPage2.Text = "Пользователи";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // AddButton
+            // 
+            this.AddButton.Location = new System.Drawing.Point(6, 6);
+            this.AddButton.Name = "AddButton";
+            this.AddButton.Size = new System.Drawing.Size(157, 23);
+            this.AddButton.TabIndex = 4;
+            this.AddButton.Text = "Добавить пользователя";
+            this.AddButton.UseVisualStyleBackColor = true;
+            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            // 
             // DeleteUserButton
             // 
             this.DeleteUserButton.Enabled = false;
@@ -159,15 +169,13 @@
             this.UserGrid.Size = new System.Drawing.Size(798, 283);
             this.UserGrid.TabIndex = 0;
             // 
-            // AddButton
+            // orderModelBindingSource
             // 
-            this.AddButton.Location = new System.Drawing.Point(6, 6);
-            this.AddButton.Name = "AddButton";
-            this.AddButton.Size = new System.Drawing.Size(157, 23);
-            this.AddButton.TabIndex = 4;
-            this.AddButton.Text = "Добавить пользователя";
-            this.AddButton.UseVisualStyleBackColor = true;
-            this.AddButton.Click += new System.EventHandler(this.AddButton_Click);
+            this.orderModelBindingSource.DataSource = typeof(Admin_Client.OrderModel);
+            // 
+            // userModelBindingSource
+            // 
+            this.userModelBindingSource.DataSource = typeof(Admin_Client.UserModel);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -179,63 +187,55 @@
             // phoneclientDataGridViewTextBoxColumn
             // 
             this.phoneclientDataGridViewTextBoxColumn.DataPropertyName = "Phone_client";
-            this.phoneclientDataGridViewTextBoxColumn.HeaderText = "Phone_client";
+            this.phoneclientDataGridViewTextBoxColumn.HeaderText = "Клиент";
             this.phoneclientDataGridViewTextBoxColumn.Name = "phoneclientDataGridViewTextBoxColumn";
             // 
             // phonedriverDataGridViewTextBoxColumn
             // 
             this.phonedriverDataGridViewTextBoxColumn.DataPropertyName = "Phone_driver";
-            this.phonedriverDataGridViewTextBoxColumn.HeaderText = "Phone_driver";
+            this.phonedriverDataGridViewTextBoxColumn.HeaderText = "Водитель";
             this.phonedriverDataGridViewTextBoxColumn.Name = "phonedriverDataGridViewTextBoxColumn";
             // 
             // address1DataGridViewTextBoxColumn
             // 
             this.address1DataGridViewTextBoxColumn.DataPropertyName = "Address1";
-            this.address1DataGridViewTextBoxColumn.HeaderText = "Address1";
+            this.address1DataGridViewTextBoxColumn.HeaderText = "Адрес 1";
             this.address1DataGridViewTextBoxColumn.Name = "address1DataGridViewTextBoxColumn";
             // 
             // address2DataGridViewTextBoxColumn
             // 
             this.address2DataGridViewTextBoxColumn.DataPropertyName = "Address2";
-            this.address2DataGridViewTextBoxColumn.HeaderText = "Address2";
+            this.address2DataGridViewTextBoxColumn.HeaderText = "Адрес 2";
             this.address2DataGridViewTextBoxColumn.Name = "address2DataGridViewTextBoxColumn";
             // 
             // orderDateDataGridViewTextBoxColumn
             // 
             this.orderDateDataGridViewTextBoxColumn.DataPropertyName = "OrderDate";
-            this.orderDateDataGridViewTextBoxColumn.HeaderText = "OrderDate";
+            this.orderDateDataGridViewTextBoxColumn.HeaderText = "Дата заказа";
             this.orderDateDataGridViewTextBoxColumn.Name = "orderDateDataGridViewTextBoxColumn";
             // 
             // priceDataGridViewTextBoxColumn
             // 
             this.priceDataGridViewTextBoxColumn.DataPropertyName = "Price";
-            this.priceDataGridViewTextBoxColumn.HeaderText = "Price";
+            this.priceDataGridViewTextBoxColumn.HeaderText = "Стоимость";
             this.priceDataGridViewTextBoxColumn.Name = "priceDataGridViewTextBoxColumn";
             // 
             // statusDataGridViewTextBoxColumn
             // 
             this.statusDataGridViewTextBoxColumn.DataPropertyName = "Status";
-            this.statusDataGridViewTextBoxColumn.HeaderText = "Status";
+            this.statusDataGridViewTextBoxColumn.HeaderText = "Статус";
             this.statusDataGridViewTextBoxColumn.Name = "statusDataGridViewTextBoxColumn";
-            // 
-            // orderModelBindingSource
-            // 
-            this.orderModelBindingSource.DataSource = typeof(Admin_Client.OrderModel);
-            // 
-            // userModelBindingSource
-            // 
-            this.userModelBindingSource.DataSource = typeof(Admin_Client.UserModel);
             // 
             // phoneDataGridViewTextBoxColumn
             // 
             this.phoneDataGridViewTextBoxColumn.DataPropertyName = "Phone";
-            this.phoneDataGridViewTextBoxColumn.HeaderText = "Phone";
+            this.phoneDataGridViewTextBoxColumn.HeaderText = "Телефон";
             this.phoneDataGridViewTextBoxColumn.Name = "phoneDataGridViewTextBoxColumn";
             // 
             // fIODataGridViewTextBoxColumn
             // 
             this.fIODataGridViewTextBoxColumn.DataPropertyName = "FIO";
-            this.fIODataGridViewTextBoxColumn.HeaderText = "FIO";
+            this.fIODataGridViewTextBoxColumn.HeaderText = "ФИО";
             this.fIODataGridViewTextBoxColumn.Name = "fIODataGridViewTextBoxColumn";
             // 
             // emailDataGridViewTextBoxColumn
@@ -247,32 +247,32 @@
             // autoDataGridViewTextBoxColumn
             // 
             this.autoDataGridViewTextBoxColumn.DataPropertyName = "Auto";
-            this.autoDataGridViewTextBoxColumn.HeaderText = "Auto";
+            this.autoDataGridViewTextBoxColumn.HeaderText = "Авто";
             this.autoDataGridViewTextBoxColumn.Name = "autoDataGridViewTextBoxColumn";
             // 
             // autoNumberDataGridViewTextBoxColumn
             // 
             this.autoNumberDataGridViewTextBoxColumn.DataPropertyName = "AutoNumber";
-            this.autoNumberDataGridViewTextBoxColumn.HeaderText = "AutoNumber";
+            this.autoNumberDataGridViewTextBoxColumn.HeaderText = "Номер авто";
             this.autoNumberDataGridViewTextBoxColumn.Name = "autoNumberDataGridViewTextBoxColumn";
             // 
             // registrationDateDataGridViewTextBoxColumn
             // 
             this.registrationDateDataGridViewTextBoxColumn.DataPropertyName = "RegistrationDate";
-            this.registrationDateDataGridViewTextBoxColumn.HeaderText = "RegistrationDate";
+            this.registrationDateDataGridViewTextBoxColumn.HeaderText = "Дата регистрации";
             this.registrationDateDataGridViewTextBoxColumn.Name = "registrationDateDataGridViewTextBoxColumn";
             // 
             // passwordDataGridViewTextBoxColumn
             // 
             this.passwordDataGridViewTextBoxColumn.DataPropertyName = "Password";
-            this.passwordDataGridViewTextBoxColumn.HeaderText = "Password";
+            this.passwordDataGridViewTextBoxColumn.HeaderText = "Пароль";
             this.passwordDataGridViewTextBoxColumn.Name = "passwordDataGridViewTextBoxColumn";
             this.passwordDataGridViewTextBoxColumn.Width = 80;
             // 
             // roleIdDataGridViewTextBoxColumn
             // 
             this.roleIdDataGridViewTextBoxColumn.DataPropertyName = "RoleId";
-            this.roleIdDataGridViewTextBoxColumn.HeaderText = "RoleId";
+            this.roleIdDataGridViewTextBoxColumn.HeaderText = "Роль";
             this.roleIdDataGridViewTextBoxColumn.Name = "roleIdDataGridViewTextBoxColumn";
             this.roleIdDataGridViewTextBoxColumn.Width = 50;
             // 
@@ -283,7 +283,7 @@
             this.ClientSize = new System.Drawing.Size(836, 403);
             this.Controls.Add(this.tabControl1);
             this.Name = "AdminForm";
-            this.Text = "AdminForm";
+            this.Text = "Панель администратора";
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.GRID)).EndInit();
@@ -301,14 +301,6 @@
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.BindingSource orderModelBindingSource;
-        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn orderDateDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn address2DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn address1DataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phonedriverDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn phoneclientDataGridViewTextBoxColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridView GRID;
         private System.Windows.Forms.Button DeleteUserButton;
         private System.Windows.Forms.Button EditUserButton;
@@ -323,5 +315,13 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn emailDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn fIODataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn phoneDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn statusDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn priceDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn orderDateDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn address2DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn address1DataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phonedriverDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn phoneclientDataGridViewTextBoxColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
     }
 }

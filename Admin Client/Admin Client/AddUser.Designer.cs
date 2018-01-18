@@ -179,7 +179,7 @@
             this.Controls.Add(this.Auto);
             this.Controls.Add(this.FIO);
             this.Name = "AddUser";
-            this.Text = "AddUser";
+            this.Text = "Добавить пользователя";
             this.ResumeLayout(false);
             this.PerformLayout();
 

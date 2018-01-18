@@ -38,12 +38,10 @@
                                     url: '/Token',
                                     data: loginData
                                 }).done(function (data) {
-                                    $('.userName').text(data.username);
-                                    $('.loginForm').css('display', 'none');
+                                    alert("Вход выполнен!");
                                     window.location.href = "http://localhost:11821/Home/ActiveOrders";
                                     // сохраняем в хранилище sessionStorage токен доступа
                                     window.localStorage.setItem('tokenKey', data.access_token);
-                                    console.log(data.access_token);
                                 }).fail(function (data) {
                                     alert('При логине возникла ошибка');
                                 });

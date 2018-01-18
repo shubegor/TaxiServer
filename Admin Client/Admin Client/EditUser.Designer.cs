@@ -151,7 +151,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 261);
+            this.ClientSize = new System.Drawing.Size(299, 261);
             this.Controls.Add(this.UserLable);
             this.Controls.Add(this.SaveButton);
             this.Controls.Add(this.label5);
@@ -165,7 +165,7 @@
             this.Controls.Add(this.Auto);
             this.Controls.Add(this.FIO);
             this.Name = "EditUser";
-            this.Text = "EditUser";
+            this.Text = "Редактировать пользователя";
             this.ResumeLayout(false);
             this.PerformLayout();
 

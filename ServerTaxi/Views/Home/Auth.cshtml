@@ -59,24 +59,24 @@
                             Phone: $('#phone').val(),
                             FIO: $('#fio').val(),
                             Email: $('#email').val(),
-                            Auto: "null",
-                            AutoNumber: "null",
-                            RegistrationDate: "2017-10-16",
+                            Auto: "",
+                            AutoNumber: "",
+                            RegistrationDate: "",
                             Password: $('#password').val(),
                             RoleId: 1
                         };
 
                         $.ajax({
-                            url: 'http://localhost:11821/api/Account/Register',
+                            url: 'http://localhost:11821/api/Admin/NewUser',
                             type: 'POST',
                             data: JSON.stringify(user),
                             contentType: "application/json; charset=utf-8",
 
-                            done: function (data) {
+                            success: function (data) {
                                 alert("Регистрация пройдена");
                             },
-                            fail: function (x, y, z) {
-                                alert(x + '\n' + y + '\n' + z + "Ошибка рег");
+                            error: function (x, y, z) {
+                                alert(x + '\n' + y + '\n' + z);
                             }
                         });
                     });
@@ -95,14 +95,10 @@
                             url: '/Token',
                             data: loginData
                         }).done(function (data) {
-                            $('.userName').text(data.username);
-                            $('.userInfo').css('display', 'block');
-                            $('.registerForm').css('display', 'none');
-                            $('.loginForm').css('display', 'none');
+                            alert("Вход выполнен!");
                             window.location.href = "http://localhost:11821/Home/Orders";
                             // сохраняем в хранилище sessionStorage токен доступа
                             window.localStorage.setItem('tokenKey', data.access_token);
-                            console.log(data.access_token);
                         }).fail(function (data) {
                             alert('При логине возникла ошибка');
                         });
@@ -111,3 +107,4 @@
                 })
             </script>
         }
+</div> </div>

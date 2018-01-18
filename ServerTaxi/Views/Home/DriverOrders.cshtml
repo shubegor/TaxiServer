@@ -1,5 +1,5 @@
 ﻿@{
-    Layout = "~/Views/Shared/_Driver_Layout.cshtml";
+    Layout = "~/Views/Shared/Driver_Layout.cshtml";
 }
 
 <div id="tableBlock" class="mt-2"></div>
@@ -8,9 +8,20 @@
     <script type="text/javascript">
         $(document).ready(function () {
 
+            CheckToken();
             GetAllOrders();
 
         });
+
+        function CheckToken() {
+            var nav = document.getElementsByClassName('navbar-nav');
+            var token = window.localStorage.getItem('tokenKey');
+            if (!token) {
+                nav.html = "<li class='nav-item'><a href='http://localhost:11821'>Главная</a></li>";
+                window.location.href = "http://localhost:11821";
+            }
+        }
+
         // Получение всех книг по ajax-запросу
         function GetAllOrders() {
 

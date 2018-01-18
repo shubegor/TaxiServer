@@ -11,7 +11,7 @@ using DataModel;
 
 namespace ServerTaxi.Controllers
 {
-    [Authorize]
+    
     [RoutePrefix("api/Admin")]
     public class AdminController : ApiController
     {
@@ -21,6 +21,7 @@ namespace ServerTaxi.Controllers
             this.repo = repo;
         }
 
+        [Authorize]
         [Route("EditUser")]
         [HttpPost]
         public IHttpActionResult EditUser(UsersModel UpUser)
@@ -35,7 +36,7 @@ namespace ServerTaxi.Controllers
 
         }
 
-
+        [Authorize]
         [Route("DeleteUser")]
         [HttpGet]
         public IHttpActionResult DeleteUser(string phone)
@@ -47,11 +48,10 @@ namespace ServerTaxi.Controllers
                 if (a != true) return BadRequest("Нет доступа");
                 else return Ok();
             }
-                catch { return BadRequest("Изменения не применены");
-    }
-}
+                catch { return BadRequest("Изменения не применены");}
+        }
 
-
+        [AllowAnonymous]
         [Route("NewUser")]
         [HttpPost]
         public async Task<IHttpActionResult> NewUser(User Nuser)
@@ -60,8 +60,8 @@ namespace ServerTaxi.Controllers
             {
                 using (var db = new DB())
                 {
-                    if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
-                        return BadRequest("Ошибка доступа");
+                    //if (db.Users.FirstOrDefault(x => x.Phone == User.Identity.Name).RoleId != 0)
+                    //    return BadRequest("Ошибка доступа");
                     AccountController a = new AccountController();
                     await a.Register(Nuser);
                 }
@@ -74,6 +74,7 @@ namespace ServerTaxi.Controllers
                 return Ok();
         }
 
+        [Authorize]
         [Route("AllUser")]
         [HttpGet]
         public List<UsersModel> AllUser()
@@ -88,6 +89,7 @@ namespace ServerTaxi.Controllers
                 return list;
         }
 
+        [Authorize]
         [Route("Orders")]
         [HttpGet]
         public List<OrderModel> Orders()

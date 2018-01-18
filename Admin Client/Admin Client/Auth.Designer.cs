@@ -37,11 +37,11 @@
             // 
             // buttonLogin
             // 
-            this.buttonLogin.Location = new System.Drawing.Point(98, 184);
+            this.buttonLogin.Location = new System.Drawing.Point(89, 180);
             this.buttonLogin.Name = "buttonLogin";
-            this.buttonLogin.Size = new System.Drawing.Size(75, 23);
+            this.buttonLogin.Size = new System.Drawing.Size(100, 23);
             this.buttonLogin.TabIndex = 0;
-            this.buttonLogin.Text = "Login";
+            this.buttonLogin.Text = "Авторизация";
             this.buttonLogin.UseVisualStyleBackColor = true;
             this.buttonLogin.Click += new System.EventHandler(this.buttonLogin_Click);
             // 
@@ -66,20 +66,20 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(37, 58);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(55, 13);
+            this.label1.Size = new System.Drawing.Size(52, 13);
             this.label1.TabIndex = 3;
-            this.label1.Text = "Username";
+            this.label1.Text = "Телефон";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(37, 88);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(53, 13);
+            this.label2.Size = new System.Drawing.Size(45, 13);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Password";
+            this.label2.Text = "Пароль";
             // 
-            // Form1
+            // Auth
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -90,7 +90,7 @@
             this.Controls.Add(this.Username);
             this.Controls.Add(this.buttonLogin);
             this.Name = "Auth";
-            this.Text = "Auth";
+            this.Text = "Окно авторизации";
             this.ResumeLayout(false);
             this.PerformLayout();
 
